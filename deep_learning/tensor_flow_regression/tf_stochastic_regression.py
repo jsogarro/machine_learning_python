@@ -10,13 +10,13 @@ b = tf.Variable(tf.zeros([1]))
 # set placeholder for our returns
 x = tf.placeholder(tf.float32, [None, 1])
 
-# mutiple our vector by the transformation matrix of weights
+# mutiply our vector by the transformation matrix of weights
 Wx = tf.matmul(x, W)
 
 # define our regression formula
 y_hat = Wx + b
 
-# place holder for our y labels
+# place holder for our training data
 y = tf.placeholder(tf.float32, [None, 1])
 
 # define the cost function
@@ -46,7 +46,7 @@ def train_model(number_of_steps, training_step):
             ys = np.array(y_point)
 
             # create our feed dictionary
-            feed = {x: xs, y_hat: ys}
+            feed = {x: xs, y: ys}
 
             # run the training step
             session.run(training_step, feed_dict=feed)
