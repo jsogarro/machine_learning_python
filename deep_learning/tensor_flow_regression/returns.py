@@ -3,8 +3,8 @@ import numpy as np
 
 
 def get_data():
-    goog = 'data/GOOG.csv'
-    sp_500 = 'data/^GSPC.csv'
+    goog = './data/GOOG.csv'
+    sp_500 = './data/^GSPC.csv'
 
     # convert the CSV files to frames of the data
     goog_df = pd.read_csv(goog, sep=',', usecols=[0,5], names=['Date', 'Goog'], header=0)

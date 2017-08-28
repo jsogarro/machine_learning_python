@@ -24,7 +24,7 @@ def run_model():
 
 def main():
     model_result = run_model()
-    print model_result
+    print(model_result)
 
 
 if __name__ == '__main__':
