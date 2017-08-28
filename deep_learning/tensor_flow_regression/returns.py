@@ -27,3 +27,20 @@ def get_data():
     Y = np.array(returns['Goog'])[1:]
 
     return X, Y
+
+
+def get_data_from_file(file_name):
+    data = pd.read_csv(file_name, sep=',', usecols=[0,5], names=['Date', 'Price'], header=0)
+    data['Date'].map(lambda x: pd.to_datetime(x, format='%Y-%m-%d'))
+    data = data.sort_values(['Date'], acending=[True])
+    returns = data[[dtype for dtype in dict(data.dtypes) if dict(data.dtypes)[]dtype] in ['float64', 'int64']]].pct_change()
+
+    return np.array(returns['Prices'])[1:]
+
+
+def get_nasdaq_oil_xom_data():
+    nasdaq = read_data_from_file()
+    oil = read_data_from_file()
+    xom = read_data_from_file()
+
+    return nasdaq, oil, xom
