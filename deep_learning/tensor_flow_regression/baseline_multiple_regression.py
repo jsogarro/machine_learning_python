@@ -9,7 +9,7 @@ nasdaq, oil, xom = get_nasdaq_oil_xom_data()
 combined = np.vstack((nasdaq, oil)).T
 
 # create our model
-multipleRegressionModel = lienar_model.LinearRegression()
+multipleRegressionModel = linear_model.LinearRegression()
 
 # train teh data on our X and Y values
 multipleRegressionModel.fit(combined, xom)
