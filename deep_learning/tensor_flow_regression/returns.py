@@ -29,6 +29,41 @@ def get_data():
     return X, Y
 
 
+def get_goog_sp500_dataframe():
+    goog = 'data/GOOG.csv'
+    sp_500 = 'data/^GSPC.csv'
+
+    # convert the CSV files to frames of the data
+    goog_df = pd.read_csv(goog, sep=',', usecols=[0,5], names=['Date', 'Goog'], header=0)
+    sp_df = pd.read_csv(sp_500, sep=',', usecols=[0,5], names=['Date', 'SP500'], header=0)
+
+    # add S&P 500 to our Google prices data frame
+    goog_df['SP500'] = sp_df['SP500']
+
+    # convert date values to Pandas datetime objects
+    goog_df['Date'].map(lambda x: pd.to_datetime(x, format='%Y-%m-%d'))
+
+    # sort the data by date
+    goog_df = goog_df.sort_values(['Date'], ascending=[True])
+
+    # grab our returns and % delta
+    returns = goog_df[[dtype for dtype in dict(goog_df.dtypes) if dict(goog_df.dtypes)[dtype] in ['float64', 'int64']]].pct_change()
+
+    return returns
+
+
+def get_goog_sp500_logistic_data():
+    returns = get_goog_sp500_dataframe()
+
+    # add an intercept column for logistic regression
+    returns['Intercept'] = 1
+
+    X = np.array(returns[['SP500', 'Intercept']][1 : -1])
+    Y = (returns['Goog'] > 0)[1 : -1]
+
+    return X, Y
+
+
 def read_data_from_file(file_name):
     # specify the columns that we care about
     data = pd.read_csv(file_name, sep=',', usecols=[0,5], names=['Date', 'Price'], header=0)
