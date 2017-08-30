@@ -29,18 +29,26 @@ def get_data():
     return X, Y
 
 
-def get_data_from_file(file_name):
+def read_data_from_file(file_name):
+    # specify the columns that we care about
     data = pd.read_csv(file_name, sep=',', usecols=[0,5], names=['Date', 'Price'], header=0)
-    data['Date'].map(lambda x: pd.to_datetime(x, format='%Y-%m-%d'))
-    data = data.sort_values(['Date'], acending=[True])
-    returns = data[[dtype for dtype in dict(data.dtypes) if dict(data.dtypes)[]dtype] in ['float64', 'int64']]].pct_change()
 
-    return np.array(returns['Prices'])[1:]
+    # convert date format
+    data['Date'].map(lambda x: pd.to_datetime(x, format='%Y-%m-%d'))
+
+    # sort ascending
+    data = data.sort_values(['Date'], ascending=[True])
+
+    # get the percentage change
+    returns = data[[dtype for dtype in dict(data.dtypes) if dict(data.dtypes)[dtype] in ['float64', 'int64']]].pct_change()
+
+    # remove the first item before returning the ndarray
+    return np.array(returns['Price'])[1:]
 
 
 def get_nasdaq_oil_xom_data():
-    nasdaq = read_data_from_file()
-    oil = read_data_from_file()
-    xom = read_data_from_file()
+    nasdaq = read_data_from_file('data/^IXIC.csv')
+    oil = read_data_from_file('data/USO.csv')
+    xom = read_data_from_file('data/XOM.csv')
 
     return nasdaq, oil, xom
