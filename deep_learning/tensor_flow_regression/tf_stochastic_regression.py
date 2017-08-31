@@ -34,8 +34,8 @@ def train_model(number_of_steps, training_step):
     # initialize
     init = tf.global_variables_initializer()
 
-    with tf.Session() as session:
-        session.run(init)
+    with tf.Session() as sess:
+        sess.run(init)
 
         for i in range(number_of_steps):
             # get training point
@@ -49,7 +49,7 @@ def train_model(number_of_steps, training_step):
             feed = {x: xs, y: ys}
 
             # run the training step
-            session.run(training_step, feed_dict=feed)
+            sess.run(training_step, feed_dict=feed)
 
 
 def main():

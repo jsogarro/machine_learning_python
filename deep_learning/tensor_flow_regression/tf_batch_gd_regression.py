@@ -38,8 +38,8 @@ def train_model(number_of_steps, training_step, batch_size=1):
     # initialize
     init = tf.global_variables_initializer()
 
-    with tf.Session() as session:
-        session.run(init)
+    with tf.Session() as sess:
+        sess.run(init)
 
         for i in range(number_of_steps):
             if dataset_size == batch_size:
@@ -59,12 +59,12 @@ def train_model(number_of_steps, training_step, batch_size=1):
             feed = { x: batch_xs.reshape(-1,1), y: batch_ys.reshape(-1,1) }
 
             # run the training step
-            session.run(training_step, feed_dict=feed)
+            sess.run(training_step, feed_dict=feed)
 
             if (i + 1) % 500 == 0:
-                print("W: %f" % session.run(W))
-                print("b: %f" % session.run(b))
-                print("cost: %f" % session.run(cost, feed_dict=feed))
+                print("W: %f" % sess.run(W))
+                print("b: %f" % sess.run(b))
+                print("cost: %f" % sess.run(cost, feed_dict=feed))
 
 
 def main():

@@ -43,8 +43,8 @@ dataset_size = len(oil)
 def train_data(number_of_steps, training_step, batch_size):
     init = tf.global_variables_initializer()
 
-    with tf.Session() as session:
-        session.run(init)
+    with tf.Session() as sess:
+        sess.run(init)
 
         for i in range(number_of_steps):
             if dataset_size == batch_size:
@@ -63,14 +63,14 @@ def train_data(number_of_steps, training_step, batch_size):
 
             feed = {nasdaq_x: batch_x_nasdaq, oil_x: batch_x_oil, y_: batch_ys}
 
-            session.run(training_step, feed_dict=feed)
+            sess.run(training_step, feed_dict=feed)
 
             if (i + 1) % 500 == 0:
                 print(i+1)
-                print("W1: %f" % session.run(nasdaq_W))
-                print("W2: %f" % session.run(oil_W))
-                print("b: %f" % session.run(b))
-                print("cost: %f" % session.run(cost, feed_dict=feed))
+                print("W1: %f" % sess.run(nasdaq_W))
+                print("W2: %f" % sess.run(oil_W))
+                print("b: %f" % sess.run(b))
+                print("cost: %f" % sess.run(cost, feed_dict=feed))
 
 
 def main():
